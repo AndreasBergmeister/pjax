@@ -1,0 +1,60 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pjax"
+version = "0.1.0"
+description = "PJAX: A projection-based framework for gradient-free and parallel learning."
+readme = "README.md"
+authors = [{name = "Andreas Bergmeister"}]
+license = {text = "Apache-2.0"}
+requires-python = ">=3.10"
+keywords = ["jax", "neural-networks", "machine-learning", "optimization", "projection-methods", "gradient-free", "parallel-learning"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "jax>=0.4.0",
+    "numpy>=1.22",
+    "frozendict",
+]
+
+[project.optional-dependencies]
+dev = [
+    "black>=23.0.0",
+    "isort>=5.12.0",
+    "autoflake>=2.0.0",
+    "ipykernel",
+    "ipywidgets",
+]
+extras = [
+    "torch>=2.0.0",
+    "torchvision>=0.15.0",
+    "tqdm>=4.60.0",
+    "flax>=0.7.0",
+    "optax>=0.1.7",
+    "matplotlib>=3.6.0",
+]
+
+[tool.setuptools]
+packages = ["pjax"]
+
+[project.urls]
+Repository = "https://github.com/AndreasBergmeister/pjax"
+
+[tool.black]
+line-length = 120
+
+[tool.isort]
+profile = "black"
