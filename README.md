@@ -105,7 +105,7 @@ pip install .
 ### For development and running all examples
 To install dependencies required for development (e.g., linters, formatters) and for running all examples (which may include comparisons with Flax/Optax models or use additional utilities):
 ```bash
-pip install .[dev,extras]
+pip install .[dev]
 ```
 
 ## Quick start: MLP example

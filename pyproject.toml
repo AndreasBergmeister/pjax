@@ -37,8 +37,6 @@ dev = [
     "autoflake>=2.0.0",
     "ipykernel",
     "ipywidgets",
-]
-extras = [
     "torch>=2.0.0",
     "torchvision>=0.15.0",
     "tqdm>=4.60.0",
