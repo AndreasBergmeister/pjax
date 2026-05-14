@@ -1,9 +1,9 @@
 # PJAX: A projection-based framework for gradient-free and parallel learning
 
-[![arXiv](https://img.shields.io/badge/arXiv-2309.12345-b31b1b.svg)](https://arxiv.org/abs/2506.05878)
+[![arXiv](https://img.shields.io/badge/arXiv-2506.05878-b31b1b.svg)](https://arxiv.org/abs/2506.05878)
+[![AISTATS 2026](https://img.shields.io/badge/AISTATS%202026-Spotlight-2f6fed.svg)](https://aistats.org/aistats2026/)
 
-
-PJAX (Projection JAX) is a numerical computation framework designed to explore a novel paradigm for training neural networks. Instead of relying on gradient-based loss minimization, PJAX reformulates training as a large-scale feasibility problem, solved using iterative projection methods. This approach offers inherent support for non-differentiable operations and local updates, enabling massive parallelism across the network. 
+PJAX (Projection JAX) is a numerical computation framework designed to explore a novel paradigm for training neural networks. Instead of relying on gradient-based loss minimization, PJAX reformulates training as a large-scale feasibility problem, solved using iterative projection methods. This approach offers inherent support for non-differentiable operations and local updates, enabling massive parallelism across the network.
 
 PJAX is built on top of [JAX](https://github.com/google/jax), inheriting its capabilities for JIT compilation, execution on hardware accelerators (CPU/GPU/TPU), and a NumPy-like API.
 
@@ -11,7 +11,7 @@ PJAX is built on top of [JAX](https://github.com/google/jax), inheriting its cap
 
 ![Training Paradigm Shift](figures/paradigm_shift.svg)
 
-*Figure 1: Neural network training paradigm shift. (a) Gradient-based methods iteratively minimize a loss function $`L(\mathbf{\theta})`$ using local gradients. (b) Our projection-based feasibility approach finds a point $`\mathbf{z}`$ in the intersection of constraint sets (e.g., $`C_1, _2`$) via iterative projections onto these sets.*
+*Figure 1: Neural network training paradigm shift. (a) Gradient-based methods iteratively minimize a loss function $`L(\mathbf{\theta})`$ using local gradients. (b) Our projection-based feasibility approach finds a point $`\mathbf{z}`$ in the intersection of constraint sets (e.g., $`C_1, C_2`$) via iterative projections onto these sets.*
 
 Traditional neural network training minimizes a global loss function using gradients computed via backpropagation. Our projection-based approach takes a different route:
 
@@ -22,16 +22,18 @@ Traditional neural network training minimizes a global loss function using gradi
 2.  **Computation Graph:** The network and the learning task are represented as a computation graph where nodes are elementary operations or data points, and edges represent data flow. Variables are associated with the edges of this graph.
 
     ![Computation Graph Example](figures/dag.svg)
-    
+
     *Figure 2: Conceptual computation graph for $`\ell(\mathrm{ReLU}(w \cdot x_i), y_i)`$ on two samples, showing projection operators for hidden function and loss nodes.*
 
 3.  **Projection Operators:** For each elementary operation (primitive function) $`f`$, we define an orthogonal projection operator onto the graph of that function. This operator finds the closest point on the function's graph to a given query point:
-```math
-\mathrm{P}_{\mathrm{Graph}(f)}(x_0, y_0) = \mathrm{arg\,min}_x \, \|x - x_0\|^2 + \|f(x) - y_0\|^2.
-```
-5.  Similarly, output constraints (derived from the loss function) also have associated projection or proximal operators.
 
-6.  **Iterative Algorithms:** Training becomes the problem of finding a point in the intersection of all these local constraint sets. Iterative projection algorithms, such as Alternating Projections (AP), Cyclic Projections (CP), or Douglas-Rachford (DR), are employed to find such a feasible point. These algorithms repeatedly project the current state onto the constraint sets, converging towards a solution.
+```math
+\mathrm{P}_{\mathrm{Graph}(f)}(x_0, y_0) = \arg\min_x \, \|x - x_0\|^2 + \|f(x) - y_0\|^2.
+```
+
+4.  Similarly, output constraints (derived from the loss function) also have associated projection or proximal operators.
+
+5.  **Iterative Algorithms:** Training becomes the problem of finding a point in the intersection of all these local constraint sets. Iterative projection algorithms, such as Alternating Projections (AP), Cyclic Projections (CP), or Douglas-Rachford (DR), are employed to find such a feasible point. These algorithms repeatedly project the current state onto the constraint sets, converging towards a solution.
 
 **Advantages:**
 *   **Gradient-Free:** Accommodates non-differentiable components naturally.
@@ -85,7 +87,7 @@ The main library code is organized as follows:
     │   └── frozen_dict.py    # immutable dictionary utilities
     ├── nn/
     │   ├── modules.py        # neural network modules and layers
-    ├── optim.py              # projection-based optimizers 
+    ├── optim.py              # projection-based optimizers
     ├── config.py             # configuration settings
 ```
 
@@ -155,7 +157,7 @@ for step in range(1000):
     params = train_step(params, x, y)
 ```
 
-For more detailed examples, including various architectures (MLPs, CNNs, RNNs) and comparisons with gradient-based methods, see [`examples/comparison.py`](examples/comparison.py). Dataloaders for `MNIST`, `CIFAR-10`, `HIGGS`, and `Shakespeare` datasets are provided in provided in [`examples/data.py`](examples/data.py).
+For more detailed examples, including various architectures (MLPs, CNNs, RNNs) and comparisons with gradient-based methods, see [`examples/comparison.py`](examples/comparison.py). Dataloaders for `MNIST`, `CIFAR-10`, `HIGGS`, and `Shakespeare` datasets are provided in [`examples/data.py`](examples/data.py).
 
 ## Running experiments
 
@@ -183,11 +185,10 @@ Use `python examples/comparison.py --help` for a full list of options.
 If you use PJAX in your research, please cite our [paper](https://arxiv.org/abs/2506.05878) as:
 
 ```bibtex
-@article{bergmeister2025pjax,
+@inproceedings{bergmeister2026pjax,
     title={A projection-based framework for gradient-free and parallel learning},
     author={Andreas Bergmeister and Manish Krishan Lal and Stefanie Jegelka and Suvrit Sra},
-    year={2025},
-    journal={arXiv preprint arXiv:2506.05878},
+    booktitle={The 29th International Conference on Artificial Intelligence and Statistics},
+    year={2026},
 }
 ```
-
